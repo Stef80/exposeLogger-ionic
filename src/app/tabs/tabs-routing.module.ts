@@ -1,40 +1,66 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TabsPage } from './tabs.page';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {TabsPage} from './tabs.page';
 
 const routes: Routes = [
-  {
-    path: 'tabs',
-    component: TabsPage,
-    children: [
-      {
-        path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
-      },
-      {
-        path: 'tab2',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
-      },
-      {
-        path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
-      },
-      {
+    {
+        path: 'tabs',
+        component: TabsPage,
+        children: [
+            {
+                path: 'dashboard',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: () => import('../pages/dashboard/dashboard.module').then(m => m.DashboardModule)
+                    }
+                ]
+            },
+            {
+                path: 'account',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: () => import('../pages/account/account.module').then(m => m.AccountModule)
+                    }
+                ]
+            },
+            {
+                path: 'budget',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: () => import('../pages/budget/budget.module').then(m => m.BudgetModule)
+                    }
+                ]
+
+            },
+            {
+                path: 'activity',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: () => import('../pages/activity/activity.module').then(m => m.ActivityModule)
+                    }
+                ]
+            },
+            {
+                path: '',
+                redirectTo: '/tabs/dashboard',
+                pathMatch: 'full'
+            }
+        ]
+    },
+    {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/dashboard',
         pathMatch: 'full'
-      }
-    ]
-  },
-  {
-    path: '',
-    redirectTo: '/tabs/tab1',
-    pathMatch: 'full'
-  }
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule {
+}
